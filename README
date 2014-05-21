@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+BE='bundle exec'
+RU='rvm'
+
+RVM_ENVIR=/home/yousir/.rvm/scripts/rvm
+RUBY_VERS=2.0.0
+
+   API="https://www.beeminder.com/api/v1"
+  JSON="goals/20-minutes/datapoints.json"
+  TOKEN="auth_token=Beeminder_API_Secret"
+curl -s "$API/users/yebyenw/$JSON?$TOKEN" > 20-minutes.json
+
+ .  $RVM_ENVIR
+$RU $RUBY_VERS
+  ./20graph.rb
