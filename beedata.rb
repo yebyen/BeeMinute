@@ -29,71 +29,71 @@ DB = Sequel.connect('sqlite://beegraph.sqlite')
 # beedata(arr): arr has newest beeminder data in no particular order
 # (records are usually newest first, data structured as the two above)
 def beedata(arr)
-    #ap arr
-    ms = DB[:minutes]
+  #ap arr
+  ms = DB[:minutes]
 
-    newest_date = nil
-    last_value = nil
+  newest_date = nil
+  last_value = nil
 
-    arr.each do |d|
-        m = ms.where(:id => d['id']).first
-        #puts "timestamp.to_date: #{Time.at(d['timestamp']).to_date}"
+  arr.each do |d|
+    m = ms.where(:id => d['id']).first
+    #puts "timestamp.to_date: #{Time.at(d['timestamp']).to_date}"
 
-        record_date = Time.at(d['updated_at']).to_date
+    record_date = Time.at(d['updated_at']).to_date
 
-        unless m.nil?
-            # Already seen this value, not news to this process.
-            #puts "found: #{m[:value]} in database with matching id"
-        else
-            ms.insert(:timestamp => d['timestamp'], :value => d['value'],
-                      :comment => d['comment'], :id => d['id'],
-                      :updated_at => d['updated_at'],
-                      :requestid => d['requestid'])
+    unless m.nil?
+      # Already seen this value, not news to this process.
+      #puts "found: #{m[:value]} in database with matching id"
+    else
+      ms.insert(:timestamp => d['timestamp'], :value => d['value'],
+                :comment => d['comment'], :id => d['id'],
+                :updated_at => d['updated_at'],
+                :requestid => d['requestid'])
 
-            #puts "New entry for: #{record_date}"
-            if newest_date.nil? or record_date>newest_date
-                newest_date = record_date
-                last_value = d['value']
-            end
-        end
-
-        # When data point is already in local cache, nothing to do but find
-        # it, read the date updated_at, and store it if newer than any other.
-        unless m.nil?
-            mt = m[:updated_at]     # data from local cache
-            dt = d['updated_at']    # data from beeminder
-
-            record_date = Time.at(m[:updated_at]).to_date
-
-            # The database has a newer date than previously seen
-            if newest_date.nil? or record_date>newest_date
-                newest_date = record_date
-                last_value = m[:value]
-            end
-
-            # We do not expect recorded values to ever be changed
-            puts "beeminder data has been modified!"    if dt > mt
-            Kernel.exit(1)                              if dt > mt
-        end
+      #puts "New entry for: #{record_date}"
+      if newest_date.nil? or record_date>newest_date
+        newest_date = record_date
+        last_value = d['value']
+      end
     end
 
-    now_date = Time.now.to_date
-    if newest_date.nil? or now_date > newest_date
-        print "time to update beeminder data, "
+    # When data point is already in local cache, nothing to do but find
+    # it, read the date updated_at, and store it if newer than any other.
+    unless m.nil?
+      mt = m[:updated_at]     # data from local cache
+      dt = d['updated_at']    # data from beeminder
 
-        unless now_date > Date.parse('2013-09-21')
-            new_value = last_value-1
-        else
-          unless now.date > Date.parse('2014-05-01')
-            new_value = last_value-1
-          else
-            new_value = last_value+1
-          end
-        end
-        puts "sending: #{new_value}"
-        cmd = "beemind -t #{AUTH_TOKEN} 20-minutes #{new_value} 'from beeminute auto'"
-        puts cmd.gsub(AUTH_TOKEN, "[AUTH TOKEN]")
-        `#{cmd}`
+      record_date = Time.at(m[:updated_at]).to_date
+
+      # The database has a newer date than previously seen
+      if newest_date.nil? or record_date>newest_date
+        newest_date = record_date
+        last_value = m[:value]
+      end
+
+      # We do not expect recorded values to ever be changed
+      puts "beeminder data has been modified!"    if dt > mt
+      Kernel.exit(1)                              if dt > mt
     end
+  end
+
+  now_date = Time.now.to_date
+  if newest_date.nil? or now_date > newest_date
+    print "time to update beeminder data, "
+
+    unless now_date > Date.parse('2013-09-21')
+      new_value = last_value-1
+    else
+      unless now.date > Date.parse('2014-05-01')
+        new_value = last_value-1
+      else
+        new_value = last_value+1
+      end
+    end
+    puts "sending: #{new_value}"
+    cmd = "beemind -t #{AUTH_TOKEN} 20-minutes #{new_value} 'from beeminute auto'"
+    puts cmd.gsub(AUTH_TOKEN, "[AUTH TOKEN]")
+    `#{cmd}`
+  end
 end
 
