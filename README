@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# At press time, it was required to modify the tool beemind from the
+# `beeminder/beeminder-gem` so that it properly required 'active_support'
+
+BE='bundle exec'
+RU='rvm'
+
+RVM_ENVIR=/home/kbarrett/.rvm/scripts/rvm
+RUBY_VERS=2.1.2
+
+   API="https://www.beeminder.com/api/v1"
+  JSON="goals/20-minutes/datapoints.json"
+  TOKEN="auth_token=Beeminder_API_Secret"
+curl -s "$API/users/yebyenw/$JSON?$TOKEN" > 20-minutes.json
+
+ .  $RVM_ENVIR
+$RU $RUBY_VERS
+  ./20graph.rb
