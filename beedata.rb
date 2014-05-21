@@ -84,10 +84,10 @@ def beedata(arr)
     unless now_date > Date.parse('2013-09-21')
       new_value = last_value-1
     else
-      unless now.date > Date.parse('2014-05-01')
-        new_value = last_value-1
-      else
+      unless now_date > Date.parse('2014-05-01')
         new_value = last_value+1
+      else
+        new_value = last_value-1
       end
     end
     puts "sending: #{new_value}"

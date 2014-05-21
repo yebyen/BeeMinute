@@ -31,6 +31,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   awesome_print
   beeminder
   sequel
