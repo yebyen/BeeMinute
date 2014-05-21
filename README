@@ -11,7 +11,8 @@ RUBY_VERS=2.1.2
 
    API="https://www.beeminder.com/api/v1"
   JSON="goals/20-minutes/datapoints.json"
-  TOKEN="auth_token=Beeminder_API_Secret"
+  TOKEN="auth_token=$(cat README_secret)"
+
 curl -s "$API/users/yebyenw/$JSON?$TOKEN" > 20-minutes.json
 
  .  $RVM_ENVIR
