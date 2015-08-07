@@ -2,6 +2,10 @@
 
 # At press time, it was required to modify the tool beemind from the
 # `beeminder/beeminder-gem` so that it properly required 'active_support'
+# https://github.com/nu7hatch/gmail/issues/132#issuecomment-70110481
+# https://github.com/gmailgem/gmail/issues/132
+# https://github.com/mikel/mail/issues/574
+# ^ stopped working this week, seems to be related to this issue
 
 BE='bundle exec'
 RU='rvm'
