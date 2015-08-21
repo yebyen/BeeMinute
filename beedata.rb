@@ -72,8 +72,8 @@ def beedata(arr)
       end
 
       # We do not expect recorded values to ever be changed
-      puts "beeminder data has been modified!"    if dt > mt
-      Kernel.exit(1)                              if dt > mt
+      #puts "beeminder data has been modified!"    if dt > mt
+      #Kernel.exit(1)                              if dt > mt
     end
   end
 
