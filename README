@@ -11,7 +11,7 @@ BE='bundle exec'
 RU='rvm'
 
 RVM_ENVIR=/home/yebyen/.rvm/scripts/rvm
-RUBY_VERS=2.3.7
+RUBY_VERS=2.5.1
 
    API="https://www.beeminder.com/api/v1"
   JSON="goals/20-minutes/datapoints.json"
@@ -21,4 +21,4 @@ curl -s "$API/users/yebyenw/$JSON?$TOKEN" > 20-minutes.json
 
  .  $RVM_ENVIR
 $RU $RUBY_VERS
-  ./20graph.rb
+$BE ./20graph.rb
