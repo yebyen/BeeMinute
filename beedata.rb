@@ -83,10 +83,10 @@ def beedata(arr)
   if newest_date.nil? or now_date > newest_date
     print "time to update beeminder data, "
 
-    if now_date > Date.new(2017,8,1)
-      new_value = last_value-1
-    else
+    if now_date > Date.new(2018,12,16)
       new_value = last_value+1
+    else
+      new_value = last_value-1
     end
     puts "sending: #{new_value}"
     cmd = "beemind -t #{AUTH_TOKEN} 20-minutes '#{new_value}' 'from beeminute auto'"
