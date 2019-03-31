@@ -10,7 +10,7 @@
 BE='bundle exec'
 RU='rvm'
 
-RVM_ENVIR=/home/yebyen/.rvm/scripts/rvm
+RVM_ENVIR=$HOME/.rvm/scripts/rvm
 RUBY_VERS=2.6.2
 
    API="https://www.beeminder.com/api/v1"
