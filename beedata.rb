@@ -2,6 +2,8 @@
 require 'ap'
 require 'sequel'
 require 'date'
+require 'active_support'
+require 'active_support/core_ext'
 require './beedata_secret'
 
 DB = Sequel.connect('sqlite://beegraph.sqlite')
@@ -81,21 +83,13 @@ def beedata(arr)
   if newest_date.nil? or now_date > newest_date
     print "time to update beeminder data, "
 
-    unless now_date > Date.parse('2013-09-21')
-      new_value = last_value-1
+    if now_date > Date.new(2018,12,16)
+      new_value = last_value+1
     else
-      unless now_date > Date.parse('2014-05-01')
-        new_value = last_value+1
-      else
-        unless now_date > Date.parse('2014-12-12')
-          new_value = last_value-1
-        else
-          new_value = last_value+1
-        end
-      end
+      new_value = last_value-1
     end
     puts "sending: #{new_value}"
-    cmd = "beemind -t #{AUTH_TOKEN} 20-minutes #{new_value} 'from beeminute auto'"
+    cmd = "beemind -t #{AUTH_TOKEN} 20-minutes '#{new_value}' 'from beeminute auto'"
     puts cmd.gsub(AUTH_TOKEN, "[AUTH TOKEN]")
     `#{cmd}`
   end

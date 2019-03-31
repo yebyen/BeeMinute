@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-gem 'beeminder'
+gem 'beeminder', git: 'git://github.com/beeminder/beeminder-gem.git'
 gem 'awesome_print', :require => 'ap'
 gem 'sequel'
 gem 'sqlite3'
-gem 'activesupport'
+gem 'activesupport', '< 5.0'

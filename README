@@ -2,12 +2,16 @@
 
 # At press time, it was required to modify the tool beemind from the
 # `beeminder/beeminder-gem` so that it properly required 'active_support'
+# https://github.com/nu7hatch/gmail/issues/132#issuecomment-70110481
+# https://github.com/gmailgem/gmail/issues/132
+# https://github.com/mikel/mail/issues/574
+# ^ stopped working this week, seems to be related to this issue
 
 BE='bundle exec'
 RU='rvm'
 
 RVM_ENVIR=/home/yebyen/.rvm/scripts/rvm
-RUBY_VERS=2.2.1
+RUBY_VERS=2.5.1
 
    API="https://www.beeminder.com/api/v1"
   JSON="goals/20-minutes/datapoints.json"
@@ -17,4 +21,4 @@ curl -s "$API/users/yebyenw/$JSON?$TOKEN" > 20-minutes.json
 
  .  $RVM_ENVIR
 $RU $RUBY_VERS
-  ./20graph.rb
+$BE ./20graph.rb
