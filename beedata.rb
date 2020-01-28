@@ -83,7 +83,7 @@ def beedata(arr)
   if newest_date.nil? or now_date > newest_date
     print "time to update beeminder data, "
 
-    if now_date > Date.new(2018,12,16)
+    if now_date < Date.new(2020,1,28)
       new_value = last_value+1
     else
       new_value = last_value-1
