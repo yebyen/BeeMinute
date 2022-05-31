@@ -4,7 +4,7 @@ BE='bundle exec'
 RU='rvm'
 
 RVM_ENVIR=$HOME/.rvm/scripts/rvm
-RUBY_VERS=3.1.1
+RUBY_VERS=3.1.2
 
    API="https://www.beeminder.com/api/v1"
   JSON="goals/20-minutes/datapoints.json"
